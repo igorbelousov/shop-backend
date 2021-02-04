@@ -19,7 +19,7 @@ type Info struct {
 type NewCategory struct {
 	Title       string `json:"title"  validate:"required"`
 	Slug        string `json:"slug"  validate:"required"`
-	ParrentID   string `json:"parrent_id" validate:"required"`
+	ParrentID   string `json:"parrent_id" `
 	Description string `json:"description"`
 }
 
@@ -27,6 +27,6 @@ type NewCategory struct {
 type UpdateCategory struct {
 	Title       *string `json:"title"  validate:"required"`
 	Slug        *string `json:"slug"  validate:"required"`
-	ParrentID   *string `json:"parrent_id" validate:"required"`
+	ParrentID   *string `json:"parrent_id"`
 	Description *string `json:"description"`
 }
