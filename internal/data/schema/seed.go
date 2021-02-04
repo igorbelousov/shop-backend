@@ -36,7 +36,7 @@ INSERT INTO users (user_id, name, email, roles, password_hash, date_created, dat
 	ON CONFLICT DO NOTHING;
 	-- Create category"
 	INSERT INTO categories (category_id, title, slug, parrent_id, description, date_created, date_updated) VALUES
-	('3d127535-afe4-4b95-ab9f-12dee808ec48', 'First category', 'first-category', '00000000-0000-0000-0000-000000000000', '', '2020-02-04 00:00:00', '2020-02-04 00:00:00')
+	('00000000-0000-0000-0000-000000000000', 'First category', 'first-category', '00000000-0000-0000-0000-000000000000', '', '2020-02-04 00:00:00', '2020-02-04 00:00:00')
 	ON CONFLICT DO NOTHING;
 `
 
