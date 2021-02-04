@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/igorbelousov/go-web-core/foundation/web"
-	"github.com/igorbelousov/go-web-core/internal/auth"
+	"github.com/igorbelousov/shop-backend/foundation/web"
+	"github.com/igorbelousov/shop-backend/internal/auth"
 	"github.com/pkg/errors"
 )
 

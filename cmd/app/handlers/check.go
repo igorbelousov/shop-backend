@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/igorbelousov/go-web-core/foundation/database"
-	"github.com/igorbelousov/go-web-core/foundation/web"
+	"github.com/igorbelousov/shop-backend/foundation/database"
+	"github.com/igorbelousov/shop-backend/foundation/web"
 	"github.com/jmoiron/sqlx"
 )
 

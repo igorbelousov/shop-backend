@@ -15,8 +15,8 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/igorbelousov/go-web-core/foundation/database"
-	"github.com/igorbelousov/go-web-core/internal/data/schema"
+	"github.com/igorbelousov/shop-backend/foundation/database"
+	"github.com/igorbelousov/shop-backend/internal/data/schema"
 )
 
 func main() {
@@ -41,7 +41,7 @@ func tokengen() {
 		Roles []string
 	}{
 		StandardClaims: jwt.StandardClaims{
-			Issuer:    "service project",
+			Issuer:    "Shop backend ",
 			Subject:   "123456789",
 			ExpiresAt: time.Now().Add(8760 * time.Hour).Unix(),
 			IssuedAt:  time.Now().Unix(),

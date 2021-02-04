@@ -1,0 +1,32 @@
+FROM golang:1.15.6 AS build_shop
+ENV CGO_ENABLED 0
+ARG VCS_REF
+
+
+RUN mkdir -p /shop
+
+WORKDIR /shop
+COPY . .
+
+WORKDIR /shop/cmd/app
+RUN go build -ldflags "-X main.build=${VCS_REF}"
+
+
+FROM alpine:3.12.3
+ARG BUILD_DATE
+ARG VCS_REF
+COPY --from=build_shop /shop/private.pem /shop/private.pem
+COPY --from=build_shop /shop/cmd/app/app /shop/app
+WORKDIR /shop
+CMD ["./app"]
+
+
+LABEL org.opencontainers.image.created="${BUILD_DATE}" \
+  org.opencontainers.image.title="Shop backend" \
+  org.opencontainers.image.authors="Belousov Igor" \
+  org.opencontainers.image.source="github.com/igorbelousov/shop-backend" \
+  org.opencontainers.image.revision="${VCS_REF}" \
+  org.opencontainers.image.vendor="Belousov Igor"
+
+
+

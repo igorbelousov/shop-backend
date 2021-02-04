@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/igorbelousov/go-web-core/foundation/web"
+	"github.com/igorbelousov/shop-backend/foundation/web"
 )
 
 // Logger writes some information about the request to the logs in the

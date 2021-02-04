@@ -15,21 +15,22 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/igorbelousov/go-web-core/cmd/app/handlers"
-	"github.com/igorbelousov/go-web-core/foundation/database"
+	"github.com/igorbelousov/shop-backend/cmd/app/handlers"
+	"github.com/igorbelousov/shop-backend/foundation/database"
+	"github.com/igorbelousov/shop-backend/internal/auth"
 
 	"github.com/ardanlabs/conf"
-	"github.com/igorbelousov/go-web-core/internal/auth"
+
 	"github.com/pkg/errors"
 )
 
 var build = "develop"
 
 func main() {
-	log := log.New(os.Stdout, "APP: ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
+	log := log.New(os.Stdout, "SHOP: ", log.LstdFlags|log.Lmicroseconds|log.Lshortfile)
 
 	if err := run(log); err != nil {
-		log.Println("APP error: ", err)
+		log.Println("SHOP error: ", err)
 		os.Exit(1)
 	}
 
@@ -60,19 +61,19 @@ func run(log *log.Logger) error {
 	}
 
 	cfg.Version.SVN = build
-	cfg.Version.Desc = "Core for writing web services"
+	cfg.Version.Desc = "Shop backend "
 
-	if err := conf.Parse(os.Args[1:], "APP", &cfg); err != nil {
+	if err := conf.Parse(os.Args[1:], "SHOP", &cfg); err != nil {
 		switch err {
 		case conf.ErrHelpWanted:
-			usage, err := conf.Usage("APP", &cfg)
+			usage, err := conf.Usage("SHOP", &cfg)
 			if err != nil {
 				return errors.Wrap(err, "generating config usage")
 			}
 			fmt.Println(usage)
 			return nil
 		case conf.ErrVersionWanted:
-			version, err := conf.VersionString("APP", &cfg)
+			version, err := conf.VersionString("SHOP", &cfg)
 			if err != nil {
 				return errors.Wrap(err, "generating config version")
 			}

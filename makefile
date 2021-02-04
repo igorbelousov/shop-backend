@@ -9,8 +9,8 @@ all: core metrics
 
 core:
 	docker build \
-	-f zarf/docker/dockerfile.go-web-core \
-	-t go-web-core-amd64:1.0 \
+	-f zarf/docker/dockerfile.shop \
+	-t shop-amd64:1.0 \
 	--build-arg VSF_REF=`git rev-parse HEAD` \
 	--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
 	.
@@ -35,8 +35,8 @@ kind-down:
 	kind delete cluster --name starter-cluster
 
 kind-load:
-	kind load docker-image go-web-core-amd64:1.0 --name starter-cluster
-	kind load docker-image metrics-amd64:1.0 --name starter-cluster
+	kind load docker-image shop-amd64:1.0 --name starter-cluster
+	# kind load docker-image metrics-amd64:1.0 --name starter-cluster
 
 kind-services:
 	kustomize build zarf/k8s/dev | kubectl apply -f -
@@ -48,15 +48,14 @@ kind-status:
 
 
 kind-status-full:
-	kubectl describe pod -lapp=go-web-core
-
+	kubectl describe pod -lapp=shop
 kind-update: core
-	kind load docker-image go-web-core-amd64:1.0 --name starter-cluster
-	kubectl delete pods -lapp=go-web-core
+	kind load docker-image shop-amd64:1.0 --name starter-cluster
+	kubectl delete pods -lapp=shop
 
 
 kind-logs:
-	kubectl logs -lapp=go-web-core --all-containers=true -f
+	kubectl logs -lapp=shop --all-containers=true -f
 # ==============================================================================
 
 run:
@@ -68,4 +67,4 @@ runa:
 
 
 lint:
-	go test -v ./...
+	export CGO_ENABLED=0 && go test -v ./...

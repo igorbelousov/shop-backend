@@ -1,4 +1,4 @@
-module github.com/igorbelousov/go-web-core
+module github.com/igorbelousov/shop-backend
 
 go 1.15
 

@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-web-core
+  name: shop
 spec:
   selector:
     matchLabels:
-      app: go-web-core
+      app: shop
   template:
     metadata:
       labels:
-        app: go-web-core
+        app: shop
     spec:
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
@@ -20,9 +20,9 @@ spec:
             - name: zipkin
               containerPort: 9411
         - name: app
-          image: go-web-core-amd64:1.0
+          image: shop-amd64:1.0
           env:
-            - name: APP_DB_HOST
+            - name: SHOP_DB_HOST
               valueFrom:
                 configMapKeyRef:
                   name: app-config
@@ -69,10 +69,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-web-core
+  name: shop
 spec:
   selector:
-    service: go-web-core
+    service: shop
   ports:
     - name: zipkin
       port: 9411

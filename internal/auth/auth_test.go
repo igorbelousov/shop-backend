@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/igorbelousov/go-web-core/internal/auth"
+	"github.com/igorbelousov/shop-backend/internal/auth"
 )
 
 // Success and failure markers.
@@ -48,9 +48,9 @@ func TestAuth(t *testing.T) {
 
 			claims := auth.Claims{
 				StandardClaims: jwt.StandardClaims{
-					Issuer:    "service project",
+					Issuer:    "Shop backend",
 					Subject:   "5cf37266-3473-4006-984f-9325122678b7",
-					Audience:  "app",
+					Audience:  "SHOP",
 					ExpiresAt: time.Now().Add(8760 * time.Hour).Unix(),
 					IssuedAt:  time.Now().Unix(),
 				},

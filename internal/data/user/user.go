@@ -9,8 +9,9 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/uuid"
-	"github.com/igorbelousov/go-web-core/foundation/database"
-	"github.com/igorbelousov/go-web-core/internal/auth"
+	"github.com/igorbelousov/shop-backend/foundation/database"
+	"github.com/igorbelousov/shop-backend/internal/auth"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
@@ -289,9 +290,9 @@ func (u User) Authenticate(ctx context.Context, traceID string, now time.Time, e
 	// and generate their token.
 	claims := auth.Claims{
 		StandardClaims: jwt.StandardClaims{
-			Issuer:    "service project",
+			Issuer:    "Shop backend",
 			Subject:   usr.ID,
-			Audience:  "app",
+			Audience:  "SHOP",
 			ExpiresAt: now.Add(time.Hour).Unix(),
 			IssuedAt:  now.Unix(),
 		},

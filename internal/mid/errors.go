@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/igorbelousov/go-web-core/foundation/web"
+	"github.com/igorbelousov/shop-backend/foundation/web"
 	"go.opentelemetry.io/otel/trace"
 )
 

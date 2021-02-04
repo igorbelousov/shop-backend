@@ -8,9 +8,10 @@ import (
 	"github.com/ardanlabs/service/business/tests"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/go-cmp/cmp"
-	"github.com/igorbelousov/go-web-core/internal/auth"
-	"github.com/igorbelousov/go-web-core/internal/data/schema"
-	"github.com/igorbelousov/go-web-core/internal/data/user"
+	"github.com/igorbelousov/shop-backend/internal/auth"
+	"github.com/igorbelousov/shop-backend/internal/data/schema"
+	"github.com/igorbelousov/shop-backend/internal/data/user"
+
 	"github.com/pkg/errors"
 )
 
@@ -45,9 +46,9 @@ func TestUser(t *testing.T) {
 
 			claims := auth.Claims{
 				StandardClaims: jwt.StandardClaims{
-					Issuer:    "service project",
+					Issuer:    "Shop backend",
 					Subject:   usr.ID,
-					Audience:  "app",
+					Audience:  "SHOP",
 					ExpiresAt: now.Add(time.Hour).Unix(),
 					IssuedAt:  now.Unix(),
 				},
@@ -72,8 +73,8 @@ func TestUser(t *testing.T) {
 
 			claims = auth.Claims{
 				StandardClaims: jwt.StandardClaims{
-					Issuer:    "service project",
-					Audience:  "app",
+					Issuer:    "Shop backend",
+					Audience:  "SHOP",
 					ExpiresAt: now.Add(time.Hour).Unix(),
 					IssuedAt:  now.Unix(),
 				},
@@ -207,9 +208,9 @@ func TestAuthenticate(t *testing.T) {
 			want := auth.Claims{
 				Roles: usr.Roles,
 				StandardClaims: jwt.StandardClaims{
-					Issuer:    "service project",
+					Issuer:    "Shop backend",
 					Subject:   usr.ID,
-					Audience:  "app",
+					Audience:  "SHOP",
 					ExpiresAt: now.Add(time.Hour).Unix(),
 					IssuedAt:  now.Unix(),
 				},

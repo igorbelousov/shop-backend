@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/igorbelousov/go-web-core/foundation/web"
-	"github.com/igorbelousov/go-web-core/internal/auth"
-	"github.com/igorbelousov/go-web-core/internal/data/user"
-	"github.com/igorbelousov/go-web-core/internal/mid"
+	"github.com/igorbelousov/shop-backend/foundation/web"
+	"github.com/igorbelousov/shop-backend/internal/auth"
+	"github.com/igorbelousov/shop-backend/internal/data/user"
+	"github.com/igorbelousov/shop-backend/internal/mid"
 	"github.com/jmoiron/sqlx"
 )
 
