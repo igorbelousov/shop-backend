@@ -34,6 +34,10 @@ INSERT INTO users (user_id, name, email, roles, password_hash, date_created, dat
 	('5cf37266-3473-4006-984f-9325122678b7', 'Admin Gopher', 'admin@example.com', '{ADMIN,USER}', '$2a$10$1ggfMVZV6Js0ybvJufLRUOWHS5f6KneuP0XwwHpJ8L8ipdry9f2/a', '2019-03-24 00:00:00', '2019-03-24 00:00:00'),
 	('45b5fbd3-755f-4379-8f07-a58d4a30fa2f', 'User Gopher', 'user@example.com', '{USER}', '$2a$10$9/XASPKBbJKVfCAZKDH.UuhsuALDr5vVm6VrYA9VFR8rccK86C1hW', '2019-03-24 00:00:00', '2019-03-24 00:00:00')
 	ON CONFLICT DO NOTHING;
+	-- Create category"
+	INSERT INTO categories (category_id, title, slug, parrent_id, description, date_created, date_updated) VALUES
+	('3d127535-afe4-4b95-ab9f-12dee808ec48', 'First category', 'first-category', '00000000-0000-0000-0000-000000000000', '', '2020-02-04 00:00:00', '2020-02-04 00:00:00')
+	ON CONFLICT DO NOTHING;
 `
 
 // DeleteAll runs the set of Drop-table queries against db. The queries are ran in a
@@ -56,4 +60,5 @@ func DeleteAll(db *sqlx.DB) error {
 
 // deleteAll is used to clean the database between tests.
 const deleteAll = `
-DELETE FROM users;`
+DELETE FROM users;
+DELETE FROM categories;`

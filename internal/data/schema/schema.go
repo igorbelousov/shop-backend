@@ -16,7 +16,7 @@ func Migrate(db *sqlx.DB) error {
 
 var migrations = []darwin.Migration{
 	{
-		Version:     1.1,
+		Version:     1.0,
 		Description: "Create table users",
 		Script: `
 CREATE TABLE users (
@@ -29,6 +29,24 @@ CREATE TABLE users (
 	date_updated  TIMESTAMP,
 
 	PRIMARY KEY (user_id)
+);`,
+	},
+	{
+		Version:     1.1,
+		Description: "Create table Category",
+		Script: `
+CREATE TABLE categories (
+	category_id       UUID,
+	title          TEXT,
+	slug         TEXT UNIQUE,
+	parrent_id   UUID,
+	description TEXT,
+	date_created  TIMESTAMP,
+	date_updated  TIMESTAMP,
+
+	PRIMARY KEY (category_id),
+	FOREIGN KEY (parrent_id) REFERENCES categories(category_id) ON DELETE SET NULL
+
 );`,
 	},
 }

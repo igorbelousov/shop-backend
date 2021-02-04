@@ -1,5 +1,5 @@
-# go-web-core
-template for web
+# Shop backend 
+backend for eCommerce site
 
 
 
