@@ -55,10 +55,10 @@ CREATE TABLE categories (
 		Script: `
 		CREATE TABLE products (
 			product_id       UUID,
-			title          TEXT,
-			slug         TEXT UNIQUE,
+			title          TEXT NOT NULL,
+			slug         TEXT UNIQUE NOT NULL,
 			category_id   UUID,
-			price NUMERIC(15,2),
+			price NUMERIC(15,2) NOT NULL DEFAULT 0.00,
 			description TEXT,
 			date_created  TIMESTAMP,
 			date_updated  TIMESTAMP,

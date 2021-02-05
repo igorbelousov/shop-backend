@@ -64,10 +64,10 @@ func (p Product) Create(ctx context.Context, traceID string, claims auth.Claims,
 		($1, $2, $3, $4, $5, $6, $7, $8)`
 
 	p.log.Printf("%s: %s: %s", traceID, "product.Create",
-		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Slug, prod.Description, prod.DateCreated, prod.DateUpdated),
+		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Price, prod.Description, prod.DateCreated, prod.DateUpdated),
 	)
 
-	if _, err := p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Slug, prod.Description, prod.DateCreated, prod.DateUpdated); err != nil {
+	if _, err := p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Price, prod.Description, prod.DateCreated, prod.DateUpdated); err != nil {
 		return Info{}, errors.Wrap(err, "inserting product")
 	}
 
@@ -86,16 +86,21 @@ func (p Product) Update(ctx context.Context, traceID string, claims auth.Claims,
 		return ErrForbidden
 	}
 
-	prod.Title = up.Title
-
-	prod.Slug = up.Slug
-
-	prod.CategoryID = up.CategoryID
-
-	prod.Price = up.Price
-
-	prod.Description = up.Description
-
+	if up.Title != nil {
+		prod.Title = *up.Title
+	}
+	if up.Slug != nil {
+		prod.Slug = *up.Slug
+	}
+	if up.CategoryID != nil {
+		prod.CategoryID = *up.CategoryID
+	}
+	if up.Price != nil {
+		prod.Price = *up.Price
+	}
+	if up.Description != nil {
+		prod.Description = *up.Description
+	}
 	prod.DateUpdated = now
 
 	const q = `
@@ -112,10 +117,10 @@ func (p Product) Update(ctx context.Context, traceID string, claims auth.Claims,
 		product_id = $1`
 
 	p.log.Printf("%s: %s: %s", traceID, "product.Update",
-		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Description, prod.DateCreated, prod.DateUpdated),
+		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Description, prod.Price, prod.DateCreated, prod.DateUpdated),
 	)
 
-	if _, err = p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Description, prod.DateUpdated); err != nil {
+	if _, err = p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Price, prod.Description, prod.DateUpdated); err != nil {
 		return errors.Wrap(err, "updating product")
 	}
 
