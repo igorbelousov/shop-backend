@@ -7,7 +7,7 @@ import (
 
 	"github.com/igorbelousov/shop-backend/foundation/web"
 	"github.com/igorbelousov/shop-backend/internal/auth"
-	"github.com/igorbelousov/shop-backend/internal/data/categories"
+	"github.com/igorbelousov/shop-backend/internal/data/category"
 	"github.com/igorbelousov/shop-backend/internal/data/user"
 	"github.com/igorbelousov/shop-backend/internal/mid"
 	"github.com/jmoiron/sqlx"
@@ -32,7 +32,7 @@ func API(build string, shutdown chan os.Signal, log *log.Logger, a *auth.Auth, d
 	}
 
 	catg := categoryGroup{
-		category: categories.New(log, db),
+		category: category.New(log, db),
 	}
 
 	app.Handle(http.MethodGet, "/users/:page/:rows", ug.query, mid.Authenticate(a), mid.Authorize(auth.RoleAdmin))

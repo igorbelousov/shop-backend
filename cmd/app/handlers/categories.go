@@ -6,12 +6,12 @@ import (
 
 	"github.com/igorbelousov/shop-backend/foundation/web"
 	"github.com/igorbelousov/shop-backend/internal/auth"
-	"github.com/igorbelousov/shop-backend/internal/data/categories"
+	"github.com/igorbelousov/shop-backend/internal/data/category"
 	"github.com/pkg/errors"
 )
 
 type categoryGroup struct {
-	category categories.Category
+	category category.Category
 }
 
 func (cg categoryGroup) query(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
@@ -21,12 +21,12 @@ func (cg categoryGroup) query(ctx context.Context, w http.ResponseWriter, r *htt
 		return web.NewShutdownError("web value missing from context")
 	}
 
-	categories, err := cg.category.Query(ctx, v.TraceID)
+	category, err := cg.category.Query(ctx, v.TraceID)
 	if err != nil {
 		return err
 	}
 
-	return web.Respond(ctx, w, categories, http.StatusOK)
+	return web.Respond(ctx, w, category, http.StatusOK)
 }
 
 func (cg categoryGroup) queryByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
@@ -39,9 +39,9 @@ func (cg categoryGroup) queryByID(ctx context.Context, w http.ResponseWriter, r 
 	cat, err := cg.category.QueryByID(ctx, v.TraceID, params["id"])
 	if err != nil {
 		switch err {
-		case categories.ErrInvalidID:
+		case category.ErrInvalidID:
 			return web.NewRequestError(err, http.StatusBadRequest)
-		case categories.ErrNotFound:
+		case category.ErrNotFound:
 			return web.NewRequestError(err, http.StatusNotFound)
 		default:
 			return errors.Wrapf(err, "ID: %s", params["id"])
@@ -61,9 +61,9 @@ func (cg categoryGroup) queryBySlug(ctx context.Context, w http.ResponseWriter, 
 	cat, err := cg.category.QueryBySlug(ctx, v.TraceID, params["slug"])
 	if err != nil {
 		switch err {
-		case categories.ErrInvalidID:
+		case category.ErrInvalidID:
 			return web.NewRequestError(err, http.StatusBadRequest)
-		case categories.ErrNotFound:
+		case category.ErrNotFound:
 			return web.NewRequestError(err, http.StatusNotFound)
 		default:
 			return errors.Wrapf(err, "Slug: %s", params["slug"])
@@ -84,7 +84,7 @@ func (cg categoryGroup) create(ctx context.Context, w http.ResponseWriter, r *ht
 		return web.NewShutdownError("claims missing from context")
 	}
 
-	var nc categories.NewCategory
+	var nc category.NewCategory
 	if err := web.Decode(r, &nc); err != nil {
 		return errors.Wrapf(err, "unable to decode payload")
 	}
@@ -108,7 +108,7 @@ func (cg categoryGroup) update(ctx context.Context, w http.ResponseWriter, r *ht
 		return web.NewShutdownError("claims missing from context")
 	}
 
-	var upd categories.UpdateCategory
+	var upd category.UpdateCategory
 	if err := web.Decode(r, &upd); err != nil {
 		return errors.Wrapf(err, "unable to decode payload")
 	}
@@ -116,11 +116,11 @@ func (cg categoryGroup) update(ctx context.Context, w http.ResponseWriter, r *ht
 	params := web.Params(r)
 	if err := cg.category.Update(ctx, v.TraceID, claims, params["id"], upd, v.Now); err != nil {
 		switch err {
-		case categories.ErrInvalidID:
+		case category.ErrInvalidID:
 			return web.NewRequestError(err, http.StatusBadRequest)
-		case categories.ErrNotFound:
+		case category.ErrNotFound:
 			return web.NewRequestError(err, http.StatusNotFound)
-		case categories.ErrForbidden:
+		case category.ErrForbidden:
 			return web.NewRequestError(err, http.StatusForbidden)
 		default:
 			return errors.Wrapf(err, "ID: %s  User: %+v", params["id"], &upd)
@@ -144,7 +144,7 @@ func (cg categoryGroup) delete(ctx context.Context, w http.ResponseWriter, r *ht
 	params := web.Params(r)
 	if err := cg.category.Delete(ctx, v.TraceID, claims, params["id"]); err != nil {
 		switch err {
-		case categories.ErrInvalidID:
+		case category.ErrInvalidID:
 			return web.NewRequestError(err, http.StatusBadRequest)
 		default:
 			return errors.Wrapf(err, "ID: %s", params["id"])
