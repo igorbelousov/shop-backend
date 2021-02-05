@@ -36,7 +36,7 @@ kind-down:
 
 kind-load:
 	kind load docker-image shop-amd64:1.0 --name starter-cluster
-	# kind load docker-image metrics-amd64:1.0 --name starter-cluster
+	kind load docker-image metrics-amd64:1.0 --name starter-cluster
 
 kind-services:
 	kustomize build zarf/k8s/dev | kubectl apply -f -

@@ -86,21 +86,16 @@ func (p Product) Update(ctx context.Context, traceID string, claims auth.Claims,
 		return ErrForbidden
 	}
 
-	if up.Title != nil {
-		prod.Title = up.Title
-	}
-	if up.Slug != nil {
-		prod.Slug = up.Slug
-	}
-	if up.CategoryID != nil {
-		prod.CategoryID = up.CategoryID
-	}
-	if up.Price != nil {
-		prod.Price = up.Price
-	}
-	if up.Description != nil {
-		prod.Description = up.Description
-	}
+	prod.Title = up.Title
+
+	prod.Slug = up.Slug
+
+	prod.CategoryID = up.CategoryID
+
+	prod.Price = up.Price
+
+	prod.Description = up.Description
+
 	prod.DateUpdated = now
 
 	const q = `
