@@ -33,7 +33,7 @@ CREATE TABLE users (
 	},
 	{
 		Version:     1.1,
-		Description: "Create table Category",
+		Description: "Create table Categories",
 		Script: `
 CREATE TABLE categories (
 	category_id       UUID,
@@ -48,5 +48,24 @@ CREATE TABLE categories (
 	FOREIGN KEY (parrent_id) REFERENCES categories(category_id) ON DELETE SET NULL
 
 );`,
+	},
+	{
+		Version:     1.2,
+		Description: "Create table Products",
+		Script: `
+		CREATE TABLE products (
+			product_id       UUID,
+			title          TEXT,
+			slug         TEXT UNIQUE,
+			category_id   UUID,
+			price NUMERIC(15,2),
+			description TEXT,
+			date_created  TIMESTAMP,
+			date_updated  TIMESTAMP,
+		
+			PRIMARY KEY (product_id),
+			FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE SET NULL
+		
+		);`,
 	},
 }

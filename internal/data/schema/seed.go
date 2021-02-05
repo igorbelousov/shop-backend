@@ -38,6 +38,10 @@ INSERT INTO users (user_id, name, email, roles, password_hash, date_created, dat
 	INSERT INTO categories (category_id, title, slug, parrent_id, description, date_created, date_updated) VALUES
 	('00000000-0000-0000-0000-000000000000', 'First category', 'first-category', '00000000-0000-0000-0000-000000000000', '', '2020-02-04 00:00:00', '2020-02-04 00:00:00')
 	ON CONFLICT DO NOTHING;
+	INSERT INTO products
+(product_id, title, slug, category_id, price,  description, date_created, date_updated) VALUES
+('9097a8f9-c7c0-4e88-81da-72ec34a1dc79', 'Product Title', 'product-title', '00000000-0000-0000-0000-000000000000', '3535.23', 'description text', '2020-02-04 00:00:00', '2020-02-04 00:00:00')
+ON CONFLICT DO NOTHING;
 `
 
 // DeleteAll runs the set of Drop-table queries against db. The queries are ran in a
