@@ -190,7 +190,7 @@ func (p Product) QueryBySlug(ctx context.Context, traceID string, Slug string) (
 	SELECT
 		*
 	FROM
-		product_id
+		products
 	WHERE 
 		slug = $1`
 

@@ -19,7 +19,7 @@ type Info struct {
 type NewCategory struct {
 	Title       string `json:"title"  validate:"required"`
 	Slug        string `json:"slug"  validate:"required"`
-	ParrentID   string `json:"parrent_id" `
+	ParrentID   string `json:"parrent_id"`
 	Description string `json:"description"`
 }
 
