@@ -98,6 +98,6 @@ func TestCategory(t *testing.T) {
 	if errors.Cause(err) != category.ErrNotFound {
 		t.Fatalf("\t%s\tTest %d:\tShould NOT be able to retrieve category : %s.", tests.Failed, testID, err)
 	}
-	t.Logf("\t%s\tTest %d:\tShould NOT be able to retrieve user.", tests.Success, testID)
+	t.Logf("\t%s\tTest %d:\tShould NOT be able to retrieve category.", tests.Success, testID)
 
 }
