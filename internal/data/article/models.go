@@ -1,12 +1,10 @@
-package category
+package article
 
-import (
-	"time"
-)
+import "time"
 
-// Info represents an individual Category.
+// Info represents an individual Article.
 type Info struct {
-	ID              string    `db:"category_id" json:"id"`
+	ID              string    `db:"article_id" json:"id"`
 	Title           string    `db:"title" json:"title"`
 	Slug            string    `db:"slug" json:"slug"`
 	ParrentID       string    `db:"parrent_id" json:"parrent_id"`
@@ -19,8 +17,8 @@ type Info struct {
 	DateUpdated     time.Time `db:"date_updated" json:"date_updated"`
 }
 
-// NewCategory contains information needed to create a new Category.
-type NewCategory struct {
+// NewArticle contains information needed to create a new Article.
+type NewArticle struct {
 	Title           string `json:"title"  validate:"required"`
 	Slug            string `json:"slug"  validate:"required"`
 	ParrentID       string `json:"parrent_id"`
@@ -31,8 +29,8 @@ type NewCategory struct {
 	MetaDescription string `json:"meta_description"`
 }
 
-// UpdateCategory in database
-type UpdateCategory struct {
+// UpdateArticle in database
+type UpdateArticle struct {
 	Title           *string `json:"title"  validate:"required"`
 	Slug            *string `json:"slug"  validate:"required"`
 	ParrentID       *string `json:"parrent_id"`

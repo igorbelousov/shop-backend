@@ -66,4 +66,9 @@ func DeleteAll(db *sqlx.DB) error {
 const deleteAll = `
 DELETE FROM users;
 DELETE FROM categories;
-DELETE FROM products;`
+DELETE FROM products;
+DELETE FROM brands;
+DELETE FROM articles;
+DELETE FROM article_categories;
+DELETE FROM slides;
+`

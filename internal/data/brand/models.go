@@ -1,15 +1,12 @@
-package category
+package brand
 
-import (
-	"time"
-)
+import "time"
 
-// Info represents an individual Category.
+// Info represents an individual Brand.
 type Info struct {
-	ID              string    `db:"category_id" json:"id"`
+	ID              string    `db:"brand_id" json:"id"`
 	Title           string    `db:"title" json:"title"`
 	Slug            string    `db:"slug" json:"slug"`
-	ParrentID       string    `db:"parrent_id" json:"parrent_id"`
 	Image           string    `db:"image" json:"image"`
 	Description     string    `db:"description" json:"description"`
 	MetaTitle       string    `db:"meta_title" json:"meta_title"`
@@ -19,11 +16,10 @@ type Info struct {
 	DateUpdated     time.Time `db:"date_updated" json:"date_updated"`
 }
 
-// NewCategory contains information needed to create a new Category.
-type NewCategory struct {
+// NewBrand contains information needed to create a new Brand.
+type NewBrand struct {
 	Title           string `json:"title"  validate:"required"`
 	Slug            string `json:"slug"  validate:"required"`
-	ParrentID       string `json:"parrent_id"`
 	Description     string `json:"description"`
 	Image           string `json:"image"`
 	MetaTitle       string `json:"meta_title"`
@@ -31,11 +27,10 @@ type NewCategory struct {
 	MetaDescription string `json:"meta_description"`
 }
 
-// UpdateCategory in database
-type UpdateCategory struct {
+// UpdateBrand in database
+type UpdateBrand struct {
 	Title           *string `json:"title"  validate:"required"`
 	Slug            *string `json:"slug"  validate:"required"`
-	ParrentID       *string `json:"parrent_id"`
 	Description     *string `json:"description"`
 	Image           *string `json:"image"`
 	MetaTitle       *string `json:"meta_title"`
