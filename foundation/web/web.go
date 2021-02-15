@@ -57,6 +57,10 @@ func (a *App) Handle(method string, path string, handler Handler, mw ...Middlewa
 	handler = wrapMiddleware(a.mw, handler)
 
 	h := func(w http.ResponseWriter, r *http.Request) {
+		setupCORS(&w, r)
+		if (*r).Method == "OPTIONS" {
+			return
+		}
 
 		// Set the context with the required values to
 		// process the request.
@@ -72,4 +76,10 @@ func (a *App) Handle(method string, path string, handler Handler, mw ...Middlewa
 		}
 	}
 	a.ContextMux.Handle(method, path, h)
+}
+
+func setupCORS(w *http.ResponseWriter, req *http.Request) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 }
