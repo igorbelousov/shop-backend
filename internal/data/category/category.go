@@ -47,26 +47,30 @@ func (c Category) Create(ctx context.Context, traceID string, claims auth.Claims
 	}
 
 	cat := Info{
-		ID:          uuid.New().String(),
-		Title:       nc.Title,
-		Slug:        nc.Slug,
-		ParrentID:   nc.ParrentID,
-		Description: nc.Description,
-		DateCreated: now.UTC(),
-		DateUpdated: now.UTC(),
+		ID:              uuid.New().String(),
+		Title:           nc.Title,
+		Slug:            nc.Slug,
+		ParrentID:       nc.ParrentID,
+		Image:           nc.Image,
+		Description:     nc.Description,
+		MetaTitle:       nc.MetaTitle,
+		MetaKeywords:    nc.MetaKeywords,
+		MetaDescription: nc.MetaDescription,
+		DateCreated:     now.UTC(),
+		DateUpdated:     now.UTC(),
 	}
 
 	const q = `
 	INSERT INTO categories
-		(category_id, title, slug, parrent_id, description, date_created, date_updated)
+		(category_id, title, slug, parrent_id, image, description, meta_title, meta_keywords, meta_description, date_created, date_updated)
 	VALUES
-		($1, $2, $3, $4, $5, $6, $7)`
+		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
 
 	c.log.Printf("%s: %s: %s", traceID, "category.Create",
-		database.Log(q, cat.ID, cat.Title, cat.Slug, cat.ParrentID, cat.Description, cat.DateCreated, cat.DateUpdated),
+		database.Log(q, cat.ID, cat.Title, cat.Slug, cat.ParrentID, cat.Image, cat.Description, cat.MetaTitle, cat.MetaKeywords, cat.MetaDescription, cat.DateCreated, cat.DateUpdated),
 	)
 
-	if _, err := c.db.ExecContext(ctx, q, cat.ID, cat.Title, cat.Slug, cat.ParrentID, cat.Description, cat.DateCreated, cat.DateUpdated); err != nil {
+	if _, err := c.db.ExecContext(ctx, q, cat.ID, cat.Title, cat.Slug, cat.ParrentID, cat.Image, cat.Description, cat.MetaTitle, cat.MetaKeywords, cat.MetaDescription, cat.DateCreated, cat.DateUpdated); err != nil {
 		return Info{}, errors.Wrap(err, "inserting category")
 	}
 
@@ -94,8 +98,20 @@ func (c Category) Update(ctx context.Context, traceID string, claims auth.Claims
 	if uc.ParrentID != nil {
 		cat.ParrentID = *uc.ParrentID
 	}
+	if uc.Image != nil {
+		cat.Image = *uc.Image
+	}
 	if uc.Description != nil {
 		cat.Description = *uc.Description
+	}
+	if uc.MetaTitle != nil {
+		cat.MetaTitle = *uc.MetaTitle
+	}
+	if uc.MetaKeywords != nil {
+		cat.MetaKeywords = *uc.MetaKeywords
+	}
+	if uc.MetaDescription != nil {
+		cat.MetaDescription = *uc.MetaDescription
 	}
 	cat.DateUpdated = now
 
@@ -106,16 +122,20 @@ func (c Category) Update(ctx context.Context, traceID string, claims auth.Claims
 		"title" = $2,
 		"slug" = $3,
 		"parrent_id" = $4,
-		"description" = $5,
-		"date_updated" = $6
+		"image" = $5,
+		"description" = $6,
+		"meta_title" = $7, 
+		"meta_keywords" = $8, 
+		"meta_description" = $9,
+		"date_updated" = $10
 	WHERE
 		category_id = $1`
 
 	c.log.Printf("%s: %s: %s", traceID, "category.Update",
-		database.Log(q, cat.ID, cat.Title, cat.Slug, cat.ParrentID, cat.Description, cat.DateCreated, cat.DateUpdated),
+		database.Log(q, cat.ID, cat.Title, cat.Slug, cat.ParrentID, cat.Image, cat.Description, cat.MetaTitle, cat.MetaKeywords, cat.MetaDescription, cat.DateUpdated),
 	)
 
-	if _, err = c.db.ExecContext(ctx, q, categoryID, cat.Title, cat.Slug, cat.ParrentID, cat.Description, cat.DateUpdated); err != nil {
+	if _, err = c.db.ExecContext(ctx, q, categoryID, cat.Title, cat.Slug, cat.ParrentID, cat.Image, cat.Description, cat.MetaTitle, cat.MetaKeywords, cat.MetaDescription, cat.DateUpdated); err != nil {
 		return errors.Wrap(err, "updating category")
 	}
 

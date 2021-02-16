@@ -34,11 +34,18 @@ func TestProduct(t *testing.T) {
 	}
 
 	np := product.NewProduct{
-		Title:       "Test Product",
-		Slug:        "test-product",
-		CategoryID:  "00000000-0000-0000-0000-000000000000",
-		Price:       3123.33,
-		Description: "DESCRIPTION",
+		Title:            "Test Product",
+		Slug:             "test-product",
+		CategoryID:       "00000000-0000-0000-0000-000000000000",
+		BrandID:          "84fc7ad7-0f6c-4938-9cec-bb8f55953709",
+		Price:            234.33,
+		OldPrice:         1242.31,
+		Image:            "link-to-image",
+		ShortDescription: "short description",
+		Description:      "DESCRIPTION",
+		MetaTitle:        "Meta Test Product",
+		MetaKeywords:     "meta keywords",
+		MetaDescription:  "meta description",
 	}
 
 	prod, err := p.Create(ctx, traceID, claims, np, now)

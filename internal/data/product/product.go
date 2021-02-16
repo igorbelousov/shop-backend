@@ -47,27 +47,34 @@ func (p Product) Create(ctx context.Context, traceID string, claims auth.Claims,
 	}
 
 	prod := Info{
-		ID:          uuid.New().String(),
-		Title:       np.Title,
-		Slug:        np.Slug,
-		CategoryID:  np.CategoryID,
-		Price:       np.Price,
-		Description: np.Description,
-		DateCreated: now.UTC(),
-		DateUpdated: now.UTC(),
+		ID:               uuid.New().String(),
+		Title:            np.Title,
+		Slug:             np.Slug,
+		CategoryID:       np.CategoryID,
+		BrandID:          np.BrandID,
+		Price:            np.Price,
+		OldPrice:         np.OldPrice,
+		Image:            np.Image,
+		ShortDescription: np.ShortDescription,
+		Description:      np.Description,
+		MetaTitle:        np.MetaTitle,
+		MetaKeywords:     np.MetaKeywords,
+		MetaDescription:  np.MetaDescription,
+		DateCreated:      now.UTC(),
+		DateUpdated:      now.UTC(),
 	}
 
 	const q = `
 	INSERT INTO products
-		(product_id, title, slug, category_id, price, description, date_created, date_updated)
+		(product_id, title, slug, category_id, brand_id, price, old_price, image, short_description, description, meta_title, meta_keywords, meta_description, date_created, date_updated)
 	VALUES
-		($1, $2, $3, $4, $5, $6, $7, $8)`
+		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`
 
 	p.log.Printf("%s: %s: %s", traceID, "product.Create",
-		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Price, prod.Description, prod.DateCreated, prod.DateUpdated),
+		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.BrandID, prod.Price, prod.OldPrice, prod.Image, prod.ShortDescription, prod.Description, prod.MetaTitle, prod.MetaKeywords, prod.MetaDescription, prod.DateCreated, prod.DateUpdated),
 	)
 
-	if _, err := p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Price, prod.Description, prod.DateCreated, prod.DateUpdated); err != nil {
+	if _, err := p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.BrandID, prod.Price, prod.OldPrice, prod.Image, prod.ShortDescription, prod.Description, prod.MetaTitle, prod.MetaKeywords, prod.MetaDescription, prod.DateCreated, prod.DateUpdated); err != nil {
 		return Info{}, errors.Wrap(err, "inserting product")
 	}
 
@@ -95,12 +102,34 @@ func (p Product) Update(ctx context.Context, traceID string, claims auth.Claims,
 	if up.CategoryID != nil {
 		prod.CategoryID = *up.CategoryID
 	}
+	if up.BrandID != nil {
+		prod.BrandID = *up.BrandID
+	}
 	if up.Price != nil {
 		prod.Price = *up.Price
+	}
+	if up.OldPrice != nil {
+		prod.OldPrice = *up.OldPrice
+	}
+	if up.Image != nil {
+		prod.Image = *up.Image
+	}
+	if up.ShortDescription != nil {
+		prod.ShortDescription = *up.ShortDescription
 	}
 	if up.Description != nil {
 		prod.Description = *up.Description
 	}
+	if up.MetaTitle != nil {
+		prod.MetaTitle = *up.MetaTitle
+	}
+	if up.MetaKeywords != nil {
+		prod.MetaKeywords = *up.MetaKeywords
+	}
+	if up.MetaDescription != nil {
+		prod.MetaDescription = *up.MetaDescription
+	}
+
 	prod.DateUpdated = now
 
 	const q = `
@@ -110,17 +139,24 @@ func (p Product) Update(ctx context.Context, traceID string, claims auth.Claims,
 		"title" = $2,
 		"slug" = $3,
 		"category_id" = $4,
-		"price" = $5,
-		"description" = $6,
-		"date_updated" = $7
+		"brand_id" = $5,
+		"price" = $6,
+		"old_price" = $7,
+		"image" = $8,
+		"short_description" = $9,
+		"description" = $10,
+		"meta_title" = $11,
+		"meta_keywords" = $12,
+		"meta_description" = $13,
+		"date_updated" = $14
 	WHERE
 		product_id = $1`
 
 	p.log.Printf("%s: %s: %s", traceID, "product.Update",
-		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Description, prod.Price, prod.DateCreated, prod.DateUpdated),
+		database.Log(q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.BrandID, prod.Price, prod.OldPrice, prod.Image, prod.ShortDescription, prod.Description, prod.MetaTitle, prod.MetaKeywords, prod.MetaDescription, prod.DateUpdated),
 	)
 
-	if _, err = p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.Price, prod.Description, prod.DateUpdated); err != nil {
+	if _, err = p.db.ExecContext(ctx, q, prod.ID, prod.Title, prod.Slug, prod.CategoryID, prod.BrandID, prod.Price, prod.OldPrice, prod.Image, prod.ShortDescription, prod.Description, prod.MetaTitle, prod.MetaKeywords, prod.MetaDescription, prod.DateUpdated); err != nil {
 		return errors.Wrap(err, "updating product")
 	}
 

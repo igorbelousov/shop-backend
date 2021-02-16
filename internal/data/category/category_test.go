@@ -34,10 +34,14 @@ func TestCategory(t *testing.T) {
 	}
 
 	nc := category.NewCategory{
-		Title:       "Test Category",
-		Slug:        "test-category",
-		ParrentID:   "00000000-0000-0000-0000-000000000000",
-		Description: "DESCRIPTION",
+		Title:           "Test Category",
+		Slug:            "test-category",
+		ParrentID:       "00000000-0000-0000-0000-000000000000",
+		Image:           "link-to-image",
+		Description:     "DESCRIPTION",
+		MetaTitle:       "Meta Test Category",
+		MetaKeywords:    "meta keywords",
+		MetaDescription: "meta description",
 	}
 
 	cat, err := c.Create(ctx, traceID, claims, nc, now)
