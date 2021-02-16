@@ -45,24 +45,24 @@ func TestBrand(t *testing.T) {
 
 	br, err := c.Create(ctx, traceID, claims, nb, now)
 	if err != nil {
-		t.Fatalf("\t%s\tTest %d:\tShould be able to create bregory : %s.", tests.Failed, testID, err)
+		t.Fatalf("\t%s\tTest %d:\tShould be able to create brand : %s.", tests.Failed, testID, err)
 	}
-	t.Logf("\t%s\tTest %d:\tShould be able to create bregory.", tests.Success, testID)
+	t.Logf("\t%s\tTest %d:\tShould be able to create brand.", tests.Success, testID)
 
 	saved, err := c.QueryByID(ctx, traceID, br.ID)
 	if err != nil {
-		t.Fatalf("\t%s\tTest %d:\tShould be able to retrieve bregory by ID: %s.", tests.Failed, testID, err)
+		t.Fatalf("\t%s\tTest %d:\tShould be able to retrieve brand by ID: %s.", tests.Failed, testID, err)
 	}
-	t.Logf("\t%s\tTest %d:\tShould be able to retrieve bregory by ID.", tests.Success, testID)
+	t.Logf("\t%s\tTest %d:\tShould be able to retrieve brand by ID.", tests.Success, testID)
 
 	if diff := cmp.Diff(br, saved); diff != "" {
-		t.Fatalf("\t%s\tTest %d:\tShould get back the same bregory. Diff:\n%s", tests.Failed, testID, diff)
+		t.Fatalf("\t%s\tTest %d:\tShould get back the same brand. Diff:\n%s", tests.Failed, testID, diff)
 	}
-	t.Logf("\t%s\tTest %d:\tShould get back the same bregory.", tests.Success, testID)
+	t.Logf("\t%s\tTest %d:\tShould get back the same brand.", tests.Success, testID)
 
 	upd := brand.UpdateBrand{
-		Title: tests.StringPointer("Test bregory Update"),
-		Slug:  tests.StringPointer("test-bregory-update"),
+		Title: tests.StringPointer("Test brand Update"),
+		Slug:  tests.StringPointer("test-brand-update"),
 	}
 
 	if err := c.Update(ctx, traceID, claims, br.ID, upd, now); err != nil {
@@ -72,9 +72,9 @@ func TestBrand(t *testing.T) {
 
 	saved, err = c.QueryBySlug(ctx, traceID, *upd.Slug)
 	if err != nil {
-		t.Fatalf("\t%s\tTest %d:\tShould be able to retrieve bregory by Slug : %s.", tests.Failed, testID, err)
+		t.Fatalf("\t%s\tTest %d:\tShould be able to retrieve brand by Slug : %s.", tests.Failed, testID, err)
 	}
-	t.Logf("\t%s\tTest %d:\tShould be able to retrieve bregory by Slug.", tests.Success, testID)
+	t.Logf("\t%s\tTest %d:\tShould be able to retrieve brand by Slug.", tests.Success, testID)
 
 	if saved.Title != *upd.Title {
 		t.Errorf("\t%s\tTest %d:\tShould be able to see updates to Title.", tests.Failed, testID)
