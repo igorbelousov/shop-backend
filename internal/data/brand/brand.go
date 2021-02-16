@@ -226,7 +226,7 @@ func (b Brand) Query(ctx context.Context, traceID string) ([]Info, error) {
 	SELECT
 		*
 	FROM
-		categories
+		brands
 	ORDER BY
 		title`
 

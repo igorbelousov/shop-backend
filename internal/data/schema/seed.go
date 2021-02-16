@@ -39,7 +39,7 @@ INSERT INTO users (user_id, name, email, roles, password_hash, date_created, dat
 	('00000000-0000-0000-0000-000000000000', 'First category', 'first-category', 'link-to-image','00000000-0000-0000-0000-000000000000', '', '','','','2020-02-04 00:00:00', '2020-02-04 00:00:00')
 	ON CONFLICT DO NOTHING;
 	INSERT INTO brands
-	(brand_id, title, slug, description, image, meta_description, meta_title, meta_keywords,  date_created, date_updated) VALUES
+	(brand_id, title, slug, description, image,  meta_title, meta_keywords,  meta_description, date_created, date_updated) VALUES
 	('84fc7ad7-0f6c-4938-9cec-bb8f55953709', 'Brand Title', 'brand-title', 'description text', 'link-to-image', '','','', '2020-02-04 00:00:00', '2020-02-04 00:00:00')
 	ON CONFLICT DO NOTHING;
 	INSERT INTO products
