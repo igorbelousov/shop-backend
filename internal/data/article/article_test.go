@@ -13,7 +13,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func TestCategory(t *testing.T) {
+func TestArticle(t *testing.T) {
 	log, db, teardown := tests.NewUnit(t)
 	t.Cleanup(teardown)
 	testID := 0

@@ -63,7 +63,7 @@ func (b Brand) Create(ctx context.Context, traceID string, claims auth.Claims, n
 	INSERT INTO brands
 		(brand_id, title, slug,  image, description, meta_title, meta_keywords, meta_description, date_created, date_updated)
 	VALUES
-		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, )`
+		($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`
 
 	b.log.Printf("%s: %s: %s", traceID, "brand.Create",
 		database.Log(q, br.ID, br.Title, br.Slug, br.Image, br.Description, br.MetaTitle, br.MetaKeywords, br.MetaDescription, br.DateCreated, br.DateUpdated),
