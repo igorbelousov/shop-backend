@@ -46,6 +46,12 @@ INSERT INTO users (user_id, name, email, roles, password_hash, date_created, dat
 	(product_id, title, slug, category_id, brand_id, price,  description, short_description, image, meta_description, meta_title, meta_keywords,  date_created, date_updated) VALUES
 	('9097a8f9-c7c0-4e88-81da-72ec34a1dc79', 'Product Title', 'product-title', '00000000-0000-0000-0000-000000000000', '84fc7ad7-0f6c-4938-9cec-bb8f55953709', '3535.23', 'description text','', 'link-to-image', '','','','2020-02-04 00:00:00', '2020-02-04 00:00:00')
 	ON CONFLICT DO NOTHING;
+	INSERT INTO article_categories
+	(category_id, title, slug,  image, description, meta_title, meta_keywords, meta_description, date_created, date_updated)
+VALUES
+	('6628112c-f80f-449d-b5d4-95d71b8472b8', 'Test Article Category', 'test-category', 'link-to-image', 'DESCRIPTION', 'Meta Test Category', 'meta keywords', 'meta description','2020-02-04 00:00:00', '2020-02-04 00:00:00')
+	 ON CONFLICT DO NOTHING
+	 ;
 `
 
 // DeleteAll runs the set of Drop-table queries against db. The queries are ran in a

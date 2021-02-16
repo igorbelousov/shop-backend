@@ -7,7 +7,7 @@ type Info struct {
 	ID              string    `db:"article_id" json:"id"`
 	Title           string    `db:"title" json:"title"`
 	Slug            string    `db:"slug" json:"slug"`
-	ParrentID       string    `db:"parrent_id" json:"parrent_id"`
+	CategoryID      string    `db:"category_id" json:"category_id"`
 	Image           string    `db:"image" json:"image"`
 	Description     string    `db:"description" json:"description"`
 	MetaTitle       string    `db:"meta_title" json:"meta_title"`
@@ -21,7 +21,7 @@ type Info struct {
 type NewArticle struct {
 	Title           string `json:"title"  validate:"required"`
 	Slug            string `json:"slug"  validate:"required"`
-	ParrentID       string `json:"parrent_id"`
+	CategoryID      string `json:"parrent_id"`
 	Description     string `json:"description"`
 	Image           string `json:"image"`
 	MetaTitle       string `json:"meta_title"`
@@ -33,7 +33,7 @@ type NewArticle struct {
 type UpdateArticle struct {
 	Title           *string `json:"title"  validate:"required"`
 	Slug            *string `json:"slug"  validate:"required"`
-	ParrentID       *string `json:"parrent_id"`
+	CategoryID      *string `json:"parrent_id"`
 	Description     *string `json:"description"`
 	Image           *string `json:"image"`
 	MetaTitle       *string `json:"meta_title"`
