@@ -60,6 +60,8 @@ func API(build string, shutdown chan os.Signal, log *log.Logger, a *auth.Auth, d
 		article: article.New(log, db),
 	}
 
+	util := new(utilsGroup)
+
 	app.Handle(http.MethodGet, "/users/:page/:rows", ug.query, mid.Authenticate(a), mid.Authorize(auth.RoleAdmin))
 	app.Handle(http.MethodGet, "/users/token/:kid", ug.token)
 	app.Handle(http.MethodGet, "/users/:id", ug.queryByID, mid.Authenticate(a))
@@ -107,6 +109,8 @@ func API(build string, shutdown chan os.Signal, log *log.Logger, a *auth.Auth, d
 	app.Handle(http.MethodPost, "/article", art.create, mid.Authenticate(a), mid.Authorize(auth.RoleAdmin))
 	app.Handle(http.MethodPut, "/article/:id", art.update, mid.Authenticate(a), mid.Authorize(auth.RoleAdmin))
 	app.Handle(http.MethodDelete, "/article/:id", art.delete, mid.Authenticate(a), mid.Authorize(auth.RoleAdmin))
+
+	app.Handle(http.MethodPost, "/upload", util.Upload, mid.Authenticate(a))
 
 	return app
 }
