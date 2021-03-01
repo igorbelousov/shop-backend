@@ -1,11 +1,12 @@
 package web
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 	"reflect"
 	"strings"
+
+	jsoniter "github.com/json-iterator/go"
 
 	"github.com/dimfeld/httptreemux/v5"
 	en "github.com/go-playground/locales/en"
@@ -50,6 +51,8 @@ func init() {
 func Params(r *http.Request) map[string]string {
 	return httptreemux.ContextParams(r.Context())
 }
+
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // Decode reads the body of an HTTP request looking for a JSON document. The
 // body is decoded into the provided value.

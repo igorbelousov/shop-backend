@@ -2,8 +2,9 @@ package web
 
 import (
 	"context"
-	"encoding/json"
 	"net/http"
+
+	jsoniter "github.com/json-iterator/go"
 
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/trace"
@@ -29,6 +30,7 @@ func Respond(ctx context.Context, w http.ResponseWriter, data interface{}, statu
 		return nil
 	}
 
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	// Convert the response value to JSON.
 	jsonData, err := json.Marshal(data)
 	if err != nil {
