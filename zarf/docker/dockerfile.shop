@@ -1,4 +1,4 @@
-FROM golang:1.15.6 AS build_shop
+FROM golang:alpine3.13 AS build_shop
 ENV CGO_ENABLED 0
 ARG VCS_REF
 
@@ -12,7 +12,7 @@ WORKDIR /shop/cmd/app
 RUN go build -ldflags "-X main.build=${VCS_REF}"
 
 
-FROM alpine:3.12.3
+FROM alpine:3.13
 ARG BUILD_DATE
 ARG VCS_REF
 COPY --from=build_shop /shop/private.pem /shop/private.pem
